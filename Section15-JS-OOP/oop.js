@@ -11,7 +11,6 @@ class User{
         this.email = email;
         this.score = 0;
     }
-
     login(){
         console.log(`${this.username} logged in`);
         return this
@@ -38,9 +37,49 @@ class User{
     this.login = function(){
         console.log(`${this.username} has logged in`);
     }
+} */
+
+
+// when we create an object using this syntax, our methods are not stored in the _proto_
+ function NewUser(username, email){
+    this.username = username;
+    this.email = email;
+    //this.login = function(){
+    //    console.log(`${this.username} has logged in`);
+    //}
 } 
 
-*/
+function NewAdmin(username, email, title){
+    // calling the User
+    // the 'this' is a reference to the actual object, so is the reference for the NewAdminObject
+    NewUser.call(this, username, email)
+    this.title = title;
+}
+// copying the user prototype
+NewAdmin.prototype.deleteUser = function(){
+    console.log(`${this.username} has deleted a user`);
+}
+NewAdmin.prototype = Object.create(User.prototype);
+
+const newAdmin = new NewAdmin('brunnao', 'brunnao@email.com', "the king")
+console.log(newAdmin);
+
+// to add a method to a prototype
+
+NewUser.prototype.login = function(){
+    console.log(`${this.username} just logged in`);
+    return this; // to be able to chain functions
+}
+
+
+
+const newuser = new NewUser('brunao', 'brunao@email.com');
+console.log(newuser);
+
+
+
+
+
 
 
 class Admin extends User{
